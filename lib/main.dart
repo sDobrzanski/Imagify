@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'images_data.dart';
+import 'package:imagify/screens/home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,22 +7,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  final ImagesData imagesData = ImagesData();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: TextButton(
-              onPressed: () async {
-                await imagesData.getRandomImage();
-              },
-              child: Text('Get data'),
-            ),
-          ),
-        ),
-      ),
+      theme: ThemeData.light().copyWith(accentColor: Color(0xFF7C4DFF)),
+      home: HomePage(),
     );
   }
 }

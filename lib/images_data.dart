@@ -8,11 +8,25 @@ class ImagesData {
   http.Response _response;
   Key _key = Key();
 
-  Future<void> getRandomImage() async {
-    _response = await http.get(
-        Uri.parse('$unsplashUrl/photos/random/?client_id=${_key.accessKey}'));
+  Future<void> searchImage(String keyword) async {
+    _response = await http.get(Uri.parse(
+        '$unsplashUrl/search/photos/?client_id=${_key.accessKey}&page=1&query=$keyword'));
     if (_response.statusCode == 200) {
       var decodedData = jsonDecode(_response.body);
+      var url = decodedData['results'][1]['urls']['raw'];
+      print(url);
+    } else {
+      print(_response.statusCode);
+      throw 'Problem with the get request';
+    }
+  }
+
+  Future<void> getRandomImages() async {
+    _response = await http.get(Uri.parse(
+        '$unsplashUrl/photos/random/?client_id=${_key.accessKey}&count=15'));
+    if (_response.statusCode == 200) {
+      var decodedData = jsonDecode(_response.body);
+      //var url = decodedData['results'][1]['urls']['raw'];
       print(decodedData);
     } else {
       print(_response.statusCode);
