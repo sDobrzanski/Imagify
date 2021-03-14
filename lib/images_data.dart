@@ -10,11 +10,10 @@ class ImagesData {
 
   Future<void> searchImage(String keyword) async {
     _response = await http.get(Uri.parse(
-        '$unsplashUrl/search/photos/?client_id=${_key.accessKey}&page=1&query=$keyword'));
+        '$unsplashUrl/search/photos/?client_id=${_key.accessKey}&page=2&query=$keyword'));
     if (_response.statusCode == 200) {
       var decodedData = jsonDecode(_response.body);
-      var url = decodedData['results'][1]['urls']['raw'];
-      print(url);
+      return decodedData;
     } else {
       print(_response.statusCode);
       throw 'Problem with the get request';
