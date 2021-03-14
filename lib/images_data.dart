@@ -21,13 +21,12 @@ class ImagesData {
     }
   }
 
-  Future<void> getRandomImages() async {
+  Future<dynamic> getRandomImages() async {
     _response = await http.get(Uri.parse(
-        '$unsplashUrl/photos/random/?client_id=${_key.accessKey}&count=15'));
+        '$unsplashUrl/photos/random/?client_id=${_key.accessKey}&count=30'));
     if (_response.statusCode == 200) {
       var decodedData = jsonDecode(_response.body);
-      //var url = decodedData['results'][1]['urls']['raw'];
-      print(decodedData);
+      return decodedData;
     } else {
       print(_response.statusCode);
       throw 'Problem with the get request';

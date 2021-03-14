@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/screens/home_page.dart';
+import 'package:imagify/widgets/custom_bottom_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light().copyWith(accentColor: Color(0xFF7C4DFF)),
-      home: HomePage(),
+      home: CustomBottomBar(),
     );
   }
 }

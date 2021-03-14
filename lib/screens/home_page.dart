@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/widgets/custom_text_field.dart';
+import 'package:imagify/widgets/random_photos_lv.dart';
 import 'package:imagify/images_data.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,9 +9,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ImagesData imagesData = ImagesData();
+  ImagesData _imagesData = ImagesData();
   String keyword;
+  var randomImages;
   final keywordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,30 +34,18 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 onPressed: () async {
-                  //await imagesData.searchImage(keyword);
-                  await imagesData.getRandomImages();
+                  await _imagesData.searchImage(keyword);
                   FocusScope.of(context).requestFocus(FocusNode());
                   keywordController.clear();
                 },
-              )
+              ),
+              Divider(height: 1, thickness: 1, color: Color(0xFF673AB7)),
+              Expanded(
+                child: RandomPhotosListView(),
+              ),
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 15,
-        iconSize: 30,
-        selectedItemColor: Color(0xFF512DA8),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourite',
-          ),
-        ],
       ),
     );
   }
