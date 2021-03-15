@@ -26,7 +26,15 @@ class _SearchedPhotosLVState extends State<SearchedPhotosLV> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailedPhotoPage(),
+                    builder: (context) => DetailedPhotoPage(
+                        fullUrl: data['results'][index]['urls']['regular'],
+                        username: data['results'][index]['user']['username'],
+                        desc: data['results'][index]['description'] == null
+                            ? data['results'][index]['alt_description']
+                            : data['results'][index]['description'],
+                        views: data['results'][index]['views'],
+                        downloadUrl: data['results'][index]['links']
+                            ['download']),
                   ));
             },
           );

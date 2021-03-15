@@ -10,7 +10,7 @@ class ImagesData {
 
   Future<void> searchImage(String keyword) async {
     _response = await http.get(Uri.parse(
-        '$unsplashUrl/search/photos/?client_id=${_key.accessKey}&page=2&query=$keyword'));
+        '$unsplashUrl/search/photos/?client_id=${_key.accessKey}&page=1&per_page=10&query=$keyword'));
     if (_response.statusCode == 200) {
       var decodedData = jsonDecode(_response.body);
       return decodedData;

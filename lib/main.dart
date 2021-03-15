@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/screens/home_page.dart';
 import 'package:imagify/widgets/custom_bottom_bar.dart';
 
 void main() {

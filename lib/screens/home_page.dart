@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/widgets/custom_text_field.dart';
 import 'package:imagify/widgets/random_photos_lv.dart';
-import 'package:imagify/images_data.dart';
 import 'package:imagify/widgets/searched_photos_lv.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,7 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ImagesData _imagesData = ImagesData();
   String keyword;
   bool isSearching = false;
   var randomImages;

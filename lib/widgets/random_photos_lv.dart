@@ -25,7 +25,14 @@ class _RandomPhotosListViewState extends State<RandomPhotosListView> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailedPhotoPage(),
+                    builder: (context) => DetailedPhotoPage(
+                        fullUrl: data[index]['urls']['regular'],
+                        username: data[index]['user']['username'],
+                        desc: data[index]['description'] == null
+                            ? data[index]['alt_description']
+                            : data[index]['description'],
+                        views: data[index]['views'],
+                        downloadUrl: data[index]['links']['download']),
                   ));
             },
           );
