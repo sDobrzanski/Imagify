@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/images_data.dart';
-import 'package:imagify/widgets/home_screen_list_tile.dart';
+import 'package:imagify/repositories/unsplash_api_client.dart';
+import 'package:imagify/repositories/photos_repository.dart';
 import 'package:imagify/screens/detailed_photo_page.dart';
+
+import 'home_screen_list_tile.dart';
 
 class SearchedPhotosLV extends StatefulWidget {
   final String keyword;
@@ -11,30 +13,22 @@ class SearchedPhotosLV extends StatefulWidget {
 }
 
 class _SearchedPhotosLVState extends State<SearchedPhotosLV> {
-  final ImagesData _imagesData = ImagesData();
+  final PhotosRepository _repo =
+      PhotosRepository(unsplashApiClient: UnsplashApiClient());
 
   ListView _searchedPhotosListView(data) {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
           return HSListTile(
-            title: data['results'][index]['description'] == null
-                ? 'Title'
-                : data['results'][index]['description'],
-            url: data['results'][index]['urls']['small'],
+            photo: data[index],
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetailedPhotoPage(
-                        fullUrl: data['results'][index]['urls']['regular'],
-                        username: data['results'][index]['user']['username'],
-                        desc: data['results'][index]['description'] == null
-                            ? data['results'][index]['alt_description']
-                            : data['results'][index]['description'],
-                        views: data['results'][index]['views'],
-                        downloadUrl: data['results'][index]['links']
-                            ['download']),
+                      photo: data[index],
+                    ),
                   ));
             },
           );
@@ -44,7 +38,7 @@ class _SearchedPhotosLVState extends State<SearchedPhotosLV> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _imagesData.searchImage(widget.keyword),
+      future: _repo.fetchSearchedPhotos(widget.keyword),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:imagify/model/photo.dart';
 
 class HSListTile extends StatelessWidget {
-  final String url;
-  final String title;
   final Function onTap;
-  HSListTile({this.title, this.url, this.onTap});
+  final Photo photo;
+  HSListTile({this.photo, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,11 @@ class HSListTile extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Image(
-                image: NetworkImage(url),
+                image: NetworkImage(photo.photoUrlSmall),
               ),
               Text(
-                title,
+                photo.photoDesc,
+                textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               )
             ],

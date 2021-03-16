@@ -10,6 +10,7 @@ class DetailedScreenPhotoText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: RichText(
+        textAlign: TextAlign.center,
         text: new TextSpan(
           style: new TextStyle(
             fontSize: 17.0,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/images_data.dart';
+import 'package:imagify/repositories/photos_repository.dart';
+import 'package:imagify/repositories/unsplash_api_client.dart';
 import 'package:imagify/screens/detailed_photo_page.dart';
 import 'package:imagify/widgets/home_screen_list_tile.dart';
 
@@ -9,7 +10,8 @@ class RandomPhotosListView extends StatefulWidget {
 }
 
 class _RandomPhotosListViewState extends State<RandomPhotosListView> {
-  final ImagesData _imagesData = ImagesData();
+  final PhotosRepository _repo =
+      PhotosRepository(unsplashApiClient: UnsplashApiClient());
   Future _data;
 
   ListView _randomPhotosListView(data) {
@@ -17,22 +19,14 @@ class _RandomPhotosListViewState extends State<RandomPhotosListView> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return HSListTile(
-            title: data[index]['description'] == null
-                ? 'Title'
-                : data[index]['description'],
-            url: data[index]['urls']['small'],
+            photo: data[index],
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetailedPhotoPage(
-                        fullUrl: data[index]['urls']['regular'],
-                        username: data[index]['user']['username'],
-                        desc: data[index]['description'] == null
-                            ? data[index]['alt_description']
-                            : data[index]['description'],
-                        views: data[index]['views'],
-                        downloadUrl: data[index]['links']['download']),
+                      photo: data[index],
+                    ),
                   ));
             },
           );
@@ -42,7 +36,7 @@ class _RandomPhotosListViewState extends State<RandomPhotosListView> {
   @override
   void initState() {
     super.initState();
-    _data = _imagesData.getRandomImages();
+    _data = _repo.fetchRandomPhotos();
   }
 
   @override
@@ -53,7 +47,8 @@ class _RandomPhotosListViewState extends State<RandomPhotosListView> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          print(snapshot.error);
+          return Text("error: ${snapshot.error}");
         } else if (snapshot.hasData) {
           return _randomPhotosListView(snapshot.data);
         }
