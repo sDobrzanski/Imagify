@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/bloc/bottom_nav_bloc_events.dart';
-import 'package:imagify/widgets/custom_bottom_bar.dart';
+import 'file:///C:/Users/szdob/AndroidStudioProjects/imagify/lib/screens/custom_bottom_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imagify/bloc/bottom_nav_bloc.dart';
 import 'package:imagify/repositories/photos_repository.dart';

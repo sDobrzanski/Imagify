@@ -68,15 +68,17 @@ class _DetailedPhotoPageState extends State<DetailedPhotoPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Stack(alignment: AlignmentDirectional.center, children: [
-                Image(
-                  image: NetworkImage(widget.photo.photoUrlRegular),
-                ),
-                Visibility(
-                  child: CircularProgressIndicator(),
-                  visible: cpiVisibility,
-                ),
-              ]),
+              Expanded(
+                child: Stack(alignment: AlignmentDirectional.center, children: [
+                  Image(
+                    image: NetworkImage(widget.photo.photoUrlRegular),
+                  ),
+                  Visibility(
+                    child: CircularProgressIndicator(),
+                    visible: cpiVisibility,
+                  ),
+                ]),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
