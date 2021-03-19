@@ -1,16 +1,19 @@
-# imagify
+Imagify is Flutter Android & iOS app to search, view and save best images from Unsplash.
+In order it to work you have to add 'key.dart' file to /lib/model catalog.
 
-A new Flutter application.
+![image](https://user-images.githubusercontent.com/44682121/111779144-0983f380-88b6-11eb-8d6b-da220b00493a.png)
 
-## Getting Started
+Photos presenting UI of app:
 
-This project is a starting point for a Flutter application.
+HomePage:
+![image](https://user-images.githubusercontent.com/44682121/111779390-5c5dab00-88b6-11eb-92b4-adaf5d1dd885.png)
 
-A few resources to get you started if this is your first Flutter project:
+DetailedPage:
+![image](https://user-images.githubusercontent.com/44682121/111779454-71d2d500-88b6-11eb-8ccb-1bdf873b1507.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+FavouritePage:
+![image](https://user-images.githubusercontent.com/44682121/111779495-7f885a80-88b6-11eb-8423-ec475a66b326.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
