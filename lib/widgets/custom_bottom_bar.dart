@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/screens/favourites_page.dart';
 import 'package:imagify/screens/home_page.dart';
+import 'package:imagify/bloc/bottom_nav_bloc.dart';
+import 'package:imagify/bloc/bottom_nav_bloc_events.dart';
+import 'package:imagify/bloc/bottom_nav_bloc_states.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomBar extends StatefulWidget {
   @override
@@ -8,47 +12,33 @@ class CustomBottomBar extends StatefulWidget {
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
-  int _pageIndex = 0;
-  PageController _pageController;
-  List<Widget> tabPages = [
-    HomePage(),
-    FavouritesPage(),
-  ];
-
-  void onPageChanged(int page) {
-    setState(() {
-      this._pageIndex = page;
-    });
-  }
-
-  void onTabTapped(int index) {
-    this._pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _pageIndex);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
+    final BottomNavigationBloc bottomNavigationBloc =
+        BlocProvider.of<BottomNavigationBloc>(context);
+
     return Scaffold(
-      body: PageView(
-        children: tabPages,
-        onPageChanged: onPageChanged,
-        controller: _pageController,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageIndex,
-        onTap: onTabTapped,
+        body: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+      builder: (BuildContext context, BottomNavigationState state) {
+        if (state is PageLoading) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is FirstPageLoadedWithRandom) {
+          return HomePage(
+            photosList: state.photosListRandom,
+          );
+        }
+        if (state is SecondPageLoaded) {
+          return FavouritesPage();
+        }
+        return Container();
+      },
+    ), bottomNavigationBar:
+            BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+                builder: (BuildContext context, BottomNavigationState state) {
+      return BottomNavigationBar(
+        currentIndex: bottomNavigationBloc.currentIndex,
         selectedFontSize: 15,
         iconSize: 30,
         selectedItemColor: Color(0xFF512DA8),
@@ -62,7 +52,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             label: 'Favourite',
           ),
         ],
-      ),
-    );
+        onTap: (index) => bottomNavigationBloc.add(PageTapped(index: index)),
+      );
+    }));
   }
 }

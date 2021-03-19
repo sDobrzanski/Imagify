@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:imagify/repositories/database_helper.dart';
 import 'package:imagify/widgets/detailed_screen_icon_button.dart';
 import 'package:imagify/widgets/detailed_screen_photo_text.dart';
 
-//TODO to refactor
 class FSListTile extends StatelessWidget {
-  final String url;
-  final String desc;
-  final String author;
-  final int likes;
-  final Function onPressed;
-  FSListTile({this.desc, this.likes, this.author, this.url, this.onPressed});
+  final FavouritePhoto favouritePhoto;
+  final Function onPressedDelete;
+  final Function onPressedDownload;
+  FSListTile(
+      {this.favouritePhoto, this.onPressedDelete, this.onPressedDownload});
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +22,34 @@ class FSListTile extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Image(
-              image: NetworkImage(url),
+              image: NetworkImage(favouritePhoto.url),
             ),
             DetailedScreenPhotoText(
               textTitle: 'Description',
-              textDesc: desc,
+              textDesc: favouritePhoto.desc,
             ),
             DetailedScreenPhotoText(
               textTitle: 'Author',
-              textDesc: author,
+              textDesc: favouritePhoto.author,
             ),
             DetailedScreenPhotoText(
               textTitle: 'Likes',
-              textDesc: likes.toString(),
+              textDesc: favouritePhoto.likes.toString(),
             ),
-            DetailedScreenIconButton(
-              iconData: Icons.clear,
-              color: Colors.black,
-              onPressed: onPressed,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DetailedScreenIconButton(
+                  iconData: Icons.clear,
+                  color: Colors.black,
+                  onPressed: onPressedDelete,
+                ),
+                DetailedScreenIconButton(
+                  iconData: Icons.file_download,
+                  color: Colors.black,
+                  onPressed: onPressedDownload,
+                ),
+              ],
             )
           ],
         ),

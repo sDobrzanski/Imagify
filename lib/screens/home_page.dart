@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:imagify/widgets/custom_text_field.dart';
 import 'package:imagify/widgets/random_photos_lv.dart';
 import 'package:imagify/widgets/searched_photos_lv.dart';
+import 'package:imagify/model/photo.dart';
 
 class HomePage extends StatefulWidget {
+  final Future<List<Photo>> photosList;
+  HomePage({this.photosList});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -51,7 +54,9 @@ class _HomePageState extends State<HomePage> {
               Divider(height: 1, thickness: 1, color: Color(0xFF673AB7)),
               Expanded(
                 child: !isSearching || keyword.isEmpty
-                    ? RandomPhotosListView()
+                    ? RandomPhotosListView(
+                        photoList: widget.photosList,
+                      )
                     : SearchedPhotosLV(
                         keyword: keyword,
                       ),

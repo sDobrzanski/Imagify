@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/repositories/photos_repository.dart';
-import 'package:imagify/repositories/unsplash_api_client.dart';
 import 'package:imagify/screens/detailed_photo_page.dart';
 import 'package:imagify/widgets/home_screen_list_tile.dart';
+import 'package:imagify/model/photo.dart';
 
 class RandomPhotosListView extends StatefulWidget {
+  final Future<List<Photo>> photoList;
+  RandomPhotosListView({this.photoList});
   @override
   _RandomPhotosListViewState createState() => _RandomPhotosListViewState();
 }
 
 class _RandomPhotosListViewState extends State<RandomPhotosListView> {
-  final PhotosRepository _repo =
-      PhotosRepository(unsplashApiClient: UnsplashApiClient());
-  Future _data;
-
   ListView _randomPhotosListView(data) {
     return ListView.builder(
         itemCount: data.length,
@@ -36,13 +33,12 @@ class _RandomPhotosListViewState extends State<RandomPhotosListView> {
   @override
   void initState() {
     super.initState();
-    _data = _repo.fetchRandomPhotos();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _data,
+      future: widget.photoList,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

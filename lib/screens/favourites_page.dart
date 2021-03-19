@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:imagify/repositories/database_helper.dart';
+import 'package:imagify/widgets/fav_photos_lv.dart';
 
 class FavouritesPage extends StatefulWidget {
-  final List<Widget> favPhotosList;
-  FavouritesPage({this.favPhotosList});
   @override
   _FavouritesPageState createState() => _FavouritesPageState();
 }
 
 class _FavouritesPageState extends State<FavouritesPage> {
-  List<Widget> myList = [];
+  DatabaseHelper db = DatabaseHelper();
   @override
   void initState() {
     super.initState();
-    myList = widget.favPhotosList;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: ListView.builder(
-            itemCount: myList.length,
-            itemBuilder: (context, index) {
-              return myList[index];
-            }),
+      body: SafeArea(
+        child: Container(
+            child: Column(children: [
+          Expanded(
+            child: FavPhotosListView(),
+          ),
+        ])),
       ),
     );
   }

@@ -33,6 +33,8 @@ dependencies:
   bloc: ^6.1.3
   flutter_bloc: ^6.1.3
   image_downloader: ^0.30.0
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:

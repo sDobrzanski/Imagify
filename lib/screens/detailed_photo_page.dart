@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:imagify/model/photo.dart';
-import 'package:imagify/screens/favourites_page.dart';
 import 'package:imagify/widgets/custom_alert_box.dart';
 import 'package:imagify/widgets/detailed_screen_icon_button.dart';
 import 'package:imagify/widgets/detailed_screen_photo_text.dart';
-import 'package:imagify/widgets/fav_screen_list_tile.dart';
-import 'file:///C:/Users/szdob/AndroidStudioProjects/imagify/lib/repositories/fav_photos.dart';
+import 'package:imagify/repositories/database_helper.dart';
 
 class DetailedPhotoPage extends StatefulWidget {
   final Photo photo;
@@ -16,10 +14,10 @@ class DetailedPhotoPage extends StatefulWidget {
 }
 
 class _DetailedPhotoPageState extends State<DetailedPhotoPage> {
-  FavPhotos _favPhotos = FavPhotos();
   Color favColor = Colors.black;
   Color downloadColor = Colors.black;
   bool cpiVisibility = false;
+
   void _downloadPhoto() async {
     setState(() {
       cpiVisibility = true;
@@ -70,24 +68,22 @@ class _DetailedPhotoPageState extends State<DetailedPhotoPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Expanded(
-                child: Image(
+              Stack(alignment: AlignmentDirectional.center, children: [
+                Image(
                   image: NetworkImage(widget.photo.photoUrlRegular),
                 ),
-              ),
-              Visibility(
-                child: CircularProgressIndicator(),
-                visible: cpiVisibility,
-              ),
+                Visibility(
+                  child: CircularProgressIndicator(),
+                  visible: cpiVisibility,
+                ),
+              ]),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   DetailedScreenPhotoText(
                     textTitle: 'Description',
-                    textDesc: widget.photo.photoDesc != null
-                        ? widget.photo.photoDesc
-                        : 'Empty title',
+                    textDesc: widget.photo.photoAltDesc,
                   ),
                   DetailedScreenPhotoText(
                     textTitle: 'Author',
@@ -107,27 +103,18 @@ class _DetailedPhotoPageState extends State<DetailedPhotoPage> {
                     DetailedScreenIconButton(
                       iconData: Icons.favorite,
                       color: favColor,
-                      onPressed: () {
-                        _favPhotos.addFavPhoto(FSListTile(
-                          desc: widget.photo.photoDesc != null
-                              ? widget.photo.photoDesc
-                              : 'Title',
-                          likes: widget.photo.likes,
-                          author: widget.photo.photoAuthor,
-                          url: widget.photo.photoUrlRegular,
-                          onPressed: () {
-                            print('deleted');
-                          },
-                        ));
+                      onPressed: () async {
+                        DatabaseHelper db = DatabaseHelper();
+                        FavouritePhoto favPhoto = FavouritePhoto();
+                        favPhoto.desc = widget.photo.photoAltDesc;
+                        favPhoto.url = widget.photo.photoUrlRegular;
+                        favPhoto.author = widget.photo.photoAuthor;
+                        favPhoto.likes = widget.photo.likes;
+                        favPhoto.downloadUrl = widget.photo.downloadUrl;
+                        await db.insertFavPhoto(favPhoto);
                         setState(() {
                           favColor = Colors.red;
                         });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FavouritesPage(
-                                      favPhotosList: _favPhotos.getFavPhotos(),
-                                    )));
                       },
                     ),
                     DetailedScreenIconButton(
