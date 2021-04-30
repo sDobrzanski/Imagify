@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:imagify/model/photo.dart';
 import 'package:bloc/bloc.dart';
 import 'bottom_nav_bloc_events.dart';
 import 'bottom_nav_bloc_states.dart';

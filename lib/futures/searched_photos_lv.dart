@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/screens/detailed_photo_page.dart';
 import 'package:imagify/model/photo.dart';
-import 'home_screen_list_tile.dart';
+import '../widgets/home_screen_list_tile.dart';
 
 class SearchedPhotosLV extends StatefulWidget {
   final Future<List<Photo>> photoList;

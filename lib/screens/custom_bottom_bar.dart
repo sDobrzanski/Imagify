@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:imagify/screens/favourites_page.dart';
 import 'package:imagify/screens/home_page.dart';
-import 'package:imagify/bloc/bottom_nav_bloc.dart';
-import 'package:imagify/bloc/bottom_nav_bloc_events.dart';
-import 'package:imagify/bloc/bottom_nav_bloc_states.dart';
+import 'package:imagify/bloc/bottom_nav_bar/bottom_nav_bloc.dart';
+import 'package:imagify/bloc/bottom_nav_bar/bottom_nav_bloc_states.dart';
+import 'package:imagify/bloc/bottom_nav_bar/bottom_nav_bloc_events.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomBar extends StatefulWidget {

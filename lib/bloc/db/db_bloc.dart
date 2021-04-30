@@ -30,8 +30,62 @@ class DbBloc extends Bloc<DbEvent, DbState> {
     }
   }
 
-  Stream<DbState> _mapFavPhotosToState(LoadFavPhotos event) async* {}
-  Stream<DbState> _mapAddPhotoToState(AddPhoto event) async* {}
-  Stream<DbState> _mapDeletePhotoToState(DeletePhoto event) async* {}
-  Stream<DbState> _mapDeleteAllPhotosToState(DeleteAllPhotos event) async* {}
+  Stream<DbState> _mapFavPhotosToState(LoadFavPhotos event) async* {
+    yield FavPhotosLoading();
+    try {
+      var list = _databaseHelper.returnFavPhotos();
+      if (list != null) {
+        yield FavPhotosLoaded(list: list);
+      } else {
+        yield FavPhotosError(error: 'List is empty');
+      }
+    } catch (e) {
+      yield FavPhotosError(error: 'Error: $e');
+    }
+  }
+
+  Stream<DbState> _mapAddPhotoToState(AddPhoto event) async* {
+    yield FavPhotosLoading();
+    try {
+      await _databaseHelper.insertFavPhoto(event.photo);
+      var list = _databaseHelper.returnFavPhotos();
+      if (list != null) {
+        yield FavPhotosLoaded(list: list);
+      } else {
+        yield FavPhotosError(error: 'List is empty');
+      }
+    } catch (e) {
+      print('Error map: $e');
+    }
+  }
+
+  Stream<DbState> _mapDeletePhotoToState(DeletePhoto event) async* {
+    yield FavPhotosLoading();
+    try {
+      await _databaseHelper.delete(event.id);
+      var list = _databaseHelper.returnFavPhotos();
+      if (list != null) {
+        yield FavPhotosLoaded(list: list);
+      } else {
+        yield FavPhotosError(error: 'List is empty');
+      }
+    } catch (e) {
+      print('Error map: $e');
+    }
+  }
+
+  Stream<DbState> _mapDeleteAllPhotosToState(DeleteAllPhotos event) async* {
+    yield FavPhotosLoading();
+    try {
+      await _databaseHelper.deleteAll();
+      var list = _databaseHelper.returnFavPhotos();
+      if (list != null) {
+        yield FavPhotosLoaded(list: list);
+      } else {
+        yield FavPhotosError(error: 'List is empty');
+      }
+    } catch (e) {
+      print('Error map: $e');
+    }
+  }
 }

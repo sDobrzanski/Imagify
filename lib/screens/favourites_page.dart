@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/widgets/fav_photos_lv.dart';
+import 'package:imagify/futures/fav_photos_lv.dart';
 
 class FavouritesPage extends StatefulWidget {
   @override
