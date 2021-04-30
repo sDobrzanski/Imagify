@@ -25,9 +25,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           return Center(child: CircularProgressIndicator());
         }
         if (state is FirstPageLoadedWithRandom) {
-          return HomePage(
-            photosList: state.photosListRandom,
-          );
+          return HomePage();
         }
         if (state is SecondPageLoaded) {
           return FavouritesPage();

@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/repositories/unsplash_api_client.dart';
-import 'package:imagify/repositories/photos_repository.dart';
 import 'package:imagify/screens/detailed_photo_page.dart';
 import 'package:imagify/model/photo.dart';
 import 'home_screen_list_tile.dart';
 
 class SearchedPhotosLV extends StatefulWidget {
-  final String keyword;
   final Future<List<Photo>> photoList;
-  SearchedPhotosLV({this.photoList, this.keyword});
+  SearchedPhotosLV({this.photoList});
   @override
   _SearchedPhotosLVState createState() => _SearchedPhotosLVState();
 }
 
 class _SearchedPhotosLVState extends State<SearchedPhotosLV> {
-  final PhotosRepository _repo =
-      PhotosRepository(unsplashApiClient: UnsplashApiClient());
-
   ListView _searchedPhotosListView(data) {
     return ListView.builder(
         itemCount: data.length,
@@ -39,8 +33,8 @@ class _SearchedPhotosLVState extends State<SearchedPhotosLV> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _repo.fetchSearchedPhotos(widget
-          .keyword), //widget.photoList_repo.fetchSearchedPhotos(widget.keyword)
+      future: widget
+          .photoList, //widget.photoList_repo.fetchSearchedPhotos(widget.keyword)
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

@@ -14,12 +14,6 @@ class CurrentIndexChanged extends BottomNavigationState {
 
 class PageLoading extends BottomNavigationState {}
 
-class FirstPageLoadedWithRandom extends BottomNavigationState {
-  final Future<List<Photo>> photosListRandom;
+class FirstPageLoadedWithRandom extends BottomNavigationState {}
 
-  FirstPageLoadedWithRandom({@required this.photosListRandom});
-}
-
-class SecondPageLoaded extends BottomNavigationState {
-  SecondPageLoaded();
-}
+class SecondPageLoaded extends BottomNavigationState {}

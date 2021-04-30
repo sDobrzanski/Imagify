@@ -31,8 +31,8 @@ class BottomNavigationBloc
       yield PageLoading();
 
       if (this.currentIndex == 0) {
-        Future<List<Photo>> data = _getRandomPhotos();
-        yield FirstPageLoadedWithRandom(photosListRandom: data);
+        //Future<List<Photo>> data = _getRandomPhotos();
+        yield FirstPageLoadedWithRandom();
       }
       if (this.currentIndex == 1) {
         yield SecondPageLoaded();
@@ -40,8 +40,8 @@ class BottomNavigationBloc
     }
   }
 
-  Future<List<Photo>> _getRandomPhotos() async {
-    Future<List<Photo>> data = photosRepository.fetchRandomPhotos();
-    return data;
-  }
+  // Future<List<Photo>> _getRandomPhotos() async {
+  //   Future<List<Photo>> data = photosRepository.fetchRandomPhotos();
+  //   return data;
+  // }
 }

@@ -58,7 +58,6 @@ class DatabaseHelper {
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
-    // Open the database. Can also add an onUpdate callback parameter.
     return await openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
   }

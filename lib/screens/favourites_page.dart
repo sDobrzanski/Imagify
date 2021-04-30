@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:imagify/repositories/database_helper.dart';
 import 'package:imagify/widgets/fav_photos_lv.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -8,7 +7,6 @@ class FavouritesPage extends StatefulWidget {
 }
 
 class _FavouritesPageState extends State<FavouritesPage> {
-  DatabaseHelper db = DatabaseHelper();
   @override
   void initState() {
     super.initState();
